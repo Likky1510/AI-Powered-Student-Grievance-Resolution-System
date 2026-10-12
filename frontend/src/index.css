@@ -1,0 +1,347 @@
+/*
+  Design direction: a campus records-office aesthetic -- the feeling of
+  a well-run administrative desk, not a generic SaaS dashboard. Ledger-like
+  structure, a muted institutional palette (ink, parchment, a single
+  signal color for urgency), and a monospace "case number" treatment for
+  grievance IDs and statuses, since this is fundamentally a tracking system.
+*/
+
+:root {
+  --ink: #1f2421;
+  --ink-soft: #4a534c;
+  --parchment: #f6f3ea;
+  --parchment-deep: #ece6d6;
+  --line: #d8d0bb;
+  --signal-urgent: #b3441e;
+  --signal-high: #b9821f;
+  --signal-medium: #4a6b5a;
+  --signal-low: #6b7a72;
+  --accent: #2e4d3f;
+  --accent-soft: #e3ece6;
+  --white: #fffdf8;
+
+  --font-display: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+  --font-body: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--parchment);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  margin: 0;
+  color: var(--ink);
+}
+
+a {
+  color: var(--accent);
+}
+
+.case-id {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  letter-spacing: 0.02em;
+  color: var(--ink-soft);
+}
+
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 220px;
+  background: var(--ink);
+  color: var(--parchment);
+  padding: 28px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar .brand {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  margin-bottom: 4px;
+}
+
+.sidebar .brand-sub {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: #9aa89e;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 32px;
+}
+
+.sidebar nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sidebar nav a {
+  color: #d8dfd9;
+  text-decoration: none;
+  padding: 9px 12px;
+  border-radius: 4px;
+  font-size: 0.92rem;
+  transition: background 0.15s ease;
+}
+
+.sidebar nav a:hover, .sidebar nav a.active {
+  background: rgba(255,255,255,0.08);
+  color: var(--white);
+}
+
+.sidebar .user-tag {
+  margin-top: auto;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,0.12);
+  font-size: 0.8rem;
+  color: #9aa89e;
+}
+
+.main {
+  flex: 1;
+  padding: 36px 44px;
+  max-width: 1100px;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 28px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 16px;
+}
+
+.page-header .eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
+  margin-bottom: 4px;
+}
+
+.card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 20px 22px;
+  margin-bottom: 16px;
+}
+
+.grid {
+  display: grid;
+  gap: 16px;
+}
+
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-4 { grid-template-columns: repeat(4, 1fr); }
+
+.stat-card .stat-value {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  margin-bottom: 2px;
+}
+
+.stat-card .stat-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+}
+
+.btn {
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 500;
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: var(--parchment);
+  padding: 9px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.btn:hover { opacity: 0.85; }
+
+.btn-secondary {
+  background: transparent;
+  color: var(--ink);
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+input, textarea, select {
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 9px 11px;
+  background: var(--white);
+  color: var(--ink);
+  width: 100%;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  display: block;
+  margin-bottom: 5px;
+}
+
+.field {
+  margin-bottom: 16px;
+}
+
+.badge {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 3px 8px;
+  border-radius: 3px;
+  display: inline-block;
+}
+
+.badge-urgent { background: #f5e3da; color: var(--signal-urgent); }
+.badge-high { background: #f6ecd6; color: var(--signal-high); }
+.badge-medium { background: var(--accent-soft); color: var(--signal-medium); }
+.badge-low { background: #eceee9; color: var(--signal-low); }
+
+.badge-status {
+  background: var(--parchment-deep);
+  color: var(--ink-soft);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-soft);
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--ink);
+}
+
+td {
+  padding: 10px 10px;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.88rem;
+  vertical-align: top;
+}
+
+tr:hover td {
+  background: var(--accent-soft);
+}
+
+.error-text {
+  color: var(--signal-urgent);
+  font-size: 0.85rem;
+  margin-top: 6px;
+}
+
+.helper-text {
+  color: var(--ink-soft);
+  font-size: 0.82rem;
+  margin-top: 4px;
+}
+
+.login-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ink);
+}
+
+.login-card {
+  background: var(--parchment);
+  width: 380px;
+  padding: 36px 32px;
+  border-radius: 6px;
+}
+
+.login-card h1 {
+  font-size: 1.4rem;
+  margin-bottom: 2px;
+}
+
+.login-card .sub {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 24px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 48px 20px;
+  color: var(--ink-soft);
+}
+
+.timeline {
+  border-left: 2px solid var(--line);
+  padding-left: 16px;
+  margin-left: 4px;
+}
+
+.timeline-item {
+  margin-bottom: 14px;
+  position: relative;
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -21px;
+  top: 4px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.timeline-item .ts {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+}

@@ -1,0 +1,6 @@
+from app.core.security import decode_access_token
+from app.core.config import get_settings
+
+token='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxNjk1NTBkNi0wMDBmLTQzZTctODExYy0wYTYyYzU0NGNjMTkiLCJyb2xlIjoic3R1ZGVudCIsImV4cCI6MTc4MjM3OTMwNn0.TnrWqTY3jekLTOgkVW5jMQoCLHL9uCKOJv1ny9Kk1HU'
+print(decode_access_token(token))
+print('settings secret key:', get_settings().jwt_secret_key)
